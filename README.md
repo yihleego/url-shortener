@@ -2,7 +2,7 @@
 
 ## Usage
 
-### Shortify
+### Shorten
 
 ```shell
 curl -X POST --location "http://localhost:18080/" -d "https://www.github.com/"
@@ -10,8 +10,8 @@ curl -X POST --location "http://localhost:18080/" -d "https://www.github.com/"
 
 ### Redirect
 
-Open in browser [localhost:18080/UPnZEg](http://localhost:18080/UPnZEg)
+Open in browser http://localhost:18080/UPnZEg
 
-### Use domain
+### Example
 
 Open in browser [草.dev/KGA6Kg](https://草.dev/KGA6Kg)

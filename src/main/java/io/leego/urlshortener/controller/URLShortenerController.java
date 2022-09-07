@@ -49,7 +49,7 @@ public class URLShortenerController {
     }
 
     @PostMapping("/")
-    public String shortify(@RequestBody String url, HttpServletResponse response) {
+    public String shorten(@RequestBody String url, HttpServletResponse response) {
         for (HashFunction hash : hashes) {
             HashCode hashCode = hash.hashString(url, StandardCharsets.UTF_8);
             // TODO Base62 is better
@@ -68,6 +68,7 @@ public class URLShortenerController {
         String url = redisTemplate.opsForValue().get(hash);
         if (url != null) {
             RedirectView v = new RedirectView(url);
+            // 301 is better than 302
             v.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
             return v;
         }
