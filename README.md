@@ -1,17 +1,20 @@
 # URL Shortener
 
+URL shortener helps you shorten unwieldy links and share branded links with custom domains at scale.
+
 ## Usage
 
 ### Shorten
 
 ```shell
-curl -X POST --location "http://localhost:18080/" -d "https://www.github.com/"
+curl -X POST --location "http://localhost:18080" \
+    -d "https://www.github.com/"
 ```
 
 ### Redirect
 
-Open in browser http://localhost:18080/UPnZEg
+http://localhost:18080/KGA6Kg
 
 ### Example
 
-Open in browser [草.dev/KGA6Kg](https://草.dev/KGA6Kg)
+[vac.io/KGA6Kg](https://vac.io/KGA6Kg)
