@@ -17,4 +17,6 @@ http://localhost:18080/KGA6Kg
 
 ### Example
 
-[vac.io/KGA6Kg](https://vac.io/KGA6Kg)
+[uuw.io](https://uuw.io/)
+
+[uuw.io/KGA6Kg](https://uuw.io/KGA6Kg)
