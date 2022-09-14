@@ -2,6 +2,8 @@
 
 URL shortener helps you shorten unwieldy links and share branded links with custom domains at scale.
 
+Implementation in Go：[url-shortener-go](https://github.com/yihleego/url-shortener-go)
+
 ## Usage
 
 ### Shorten
@@ -13,10 +15,12 @@ curl -X POST --location "http://localhost:18080" \
 
 ### Redirect
 
-http://localhost:18080/KGA6Kg
+http://localhost:18080/jqHNa
 
 ### Example
 
-[uuw.io](https://uuw.io/)
+[uuw.io/jqHNa](https://uuw.io/jqHNa)
 
-[uuw.io/KGA6Kg](https://uuw.io/KGA6Kg)
+## Demo
+
+[uuw.io](https://uuw.io/)

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -52,11 +51,12 @@ public class URLShortenerController {
     public String shorten(@RequestBody String url, HttpServletResponse response) {
         for (HashFunction hash : hashes) {
             HashCode hashCode = hash.hashString(url, StandardCharsets.UTF_8);
-            // TODO Base62 is better
-            String s = Base64.getUrlEncoder().withoutPadding().encodeToString(hashCode.asBytes());
-            Boolean b = redisTemplate.execute(script, List.of(s), url, /* timeout */ "86400");
+            // Base62 is better
+            //String key = Base64.getUrlEncoder().withoutPadding().encodeToString(hashCode.asBytes());
+            String key = toBase62(hashCode.asBytes());
+            Boolean b = redisTemplate.execute(script, List.of(key), url, /* timeout */ "86400");
             if (b != null && b) {
-                return s;
+                return key;
             }
         }
         response.setStatus(HttpStatus.CONFLICT.value());
@@ -76,4 +76,26 @@ public class URLShortenerController {
         return null;
     }
 
+    private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+    private static String toBase62(byte[] src) {
+        int rs = 0;
+        int cs = (int) Math.ceil(Math.log(256) / Math.log(62) * src.length);
+        byte[] dst = new byte[cs];
+        for (byte b : src) {
+            int c = 0;
+            int v = b >= 0 ? b : 256 + b;
+            for (int i = cs - 1; i >= 0 && (v != 0 || c < rs); i--) {
+                v += (256 * dst[i]);
+                dst[i] = (byte) (v % 62);
+                v /= 62;
+                c++;
+            }
+            rs = c;
+        }
+        for (int i = cs - rs; i < cs; i++) {
+            dst[i] = (byte) ALPHABET.charAt(dst[i]);
+        }
+        return new String(dst, cs - rs, rs);
+    }
 }

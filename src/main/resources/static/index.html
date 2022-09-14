@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>URL Shortener</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="URL Shortener">
+    <meta name="description" content="URL Shortener">
+    <link href="favicon.png" rel="shortcut icon" type="image/x-icon">
+    <style>
+        div.content {
+            text-align: center;
+        }
+
+        div.content > textarea {
+            width: 30em;
+            height: 12em;
+            margin: 1em;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <textarea id="source" placeholder="URL Here"></textarea>
+    <div class="buttons">
+        <button onclick="shorten()">Shorten</button>
+    </div>
+    <div>
+        <a id="target" target="_blank" href=""></a>
+    </div>
+</div>
+</body>
+<script>
+    function shorten() {
+        let url = document.getElementById("source").value;
+        if (!url) {
+            return
+        }
+        fetch("/urls/", {"method": "POST", "body": url})
+          .then(res => {
+              if (res.ok) {
+                  return res.text()
+              }
+              throw res.statusText
+          })
+          .then(s => {
+              let a = document.getElementById("target");
+              a.href = 'https://uuw.io/' + s;
+              a.innerHTML = 'uuw.io/' + s;
+          })
+          .catch(err => alert(err));
+    }
+</script>
+</html>
