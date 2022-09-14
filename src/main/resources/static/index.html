@@ -22,7 +22,7 @@
 <div class="content">
     <textarea id="source" placeholder="URL Here"></textarea>
     <div class="buttons">
-        <button onclick="shorten()">Shorten</button>
+        <button id="shorten" onclick="shorten()">Shorten</button>
     </div>
     <div>
         <a id="target" target="_blank" href=""></a>
@@ -30,11 +30,15 @@
 </div>
 </body>
 <script>
+    let input = document.getElementById("source")
+    let button = document.getElementById("shorten");
+
     function shorten() {
-        let url = document.getElementById("source").value;
+        let url = input.value;
         if (!url) {
             return
         }
+        button.disabled = true
         fetch("/urls/", {"method": "POST", "body": url})
           .then(res => {
               if (res.ok) {
@@ -47,7 +51,8 @@
               a.href = 'https://uuw.io/' + s;
               a.innerHTML = 'uuw.io/' + s;
           })
-          .catch(err => alert(err));
+          .catch(err => alert(err))
+          .finally(() => button.disabled = false);
     }
 </script>
 </html>
